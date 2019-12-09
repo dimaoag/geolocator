@@ -6,14 +6,23 @@ namespace App;
 
 class Locator
 {
+    private $client;
+    private $apiKey;
+
+    public function __construct(HttpGeoClient $client, string $apiKey)
+    {
+        $this->client = $client;
+        $this->apiKey = $apiKey;
+    }
+
     public function locate(Ip $ip): ?Location
     {
         $url = 'https://api.ipgeolocation.io/ipgeo?' . http_build_query([
-            'apiKey' => 'ldsfjlsjflsfsldf',
+            'apiKey' => $this->apiKey,
             'ip' => $ip->getValue()
         ]);
 
-        $response = file_get_contents($url);
+        $response = $this->client->getResponse($url);
         $data = json_decode($response, true);
 
         $data = array_map(function ($value){
