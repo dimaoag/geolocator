@@ -1,15 +1,62 @@
 FROM php:7.4-cli
 
-RUN apt-get update && apt-get install -y \
-		curl \
-        wget \
-        git \
-        unzip \
-        wait-for-it \
-        libfreetype6-dev \
-        libjpeg62-turbo-dev \
-        libpng-dev \
-    && docker-php-ext-install pdo_mysql \
+RUN rm /etc/apt/preferences.d/no-debian-php && \
+    apt-get update -yqq && \
+    apt-get install -y \
+    apt-utils \
+    apt-transport-https \
+    wait-for-it \
+    curl \
+    wget \
+	zip \
+	nano \
+    unzip \
+    openssl \
+	libzip-dev \
+	zlib1g-dev \
+	libfreetype6-dev \
+	libjpeg62-turbo-dev \
+	libpng-dev \
+	libjpeg-dev \
+	libpq-dev \
+    libmcrypt-dev \
+    libc-client-dev \
+    libkrb5-dev \
+    libxslt-dev \
+    libmagickwand-dev --no-install-recommends \
+    libmemcached-dev \
+    libicu-dev \
+    libxml2-dev \
+    libldb-dev \
+    libldap2-dev \
+    libssl-dev \
+    libxslt-dev \
+    libcurl4 \
+    libcurl3-dev \
+    firebird-dev \
+    libpspell-dev \
+    libtidy-dev \
+    libsnmp-dev \
+    librecode0 \
+    librecode-dev \
+    libonig-dev \
+    && pecl install xdebug \
+    && pecl install imagick \
+    && pecl install memcached \
+    && docker-php-ext-install zip \
+    && docker-php-ext-install opcache \
+    && docker-php-ext-install bcmath \
+    && docker-php-ext-install ctype \
+    && docker-php-ext-install mbstring \
+    && docker-php-ext-install json \
+    && docker-php-ext-install tokenizer \
+    && docker-php-ext-install pdo \
+    && docker-php-ext-install xml \
+    && docker-php-ext-install soap \
+    && docker-php-ext-enable xdebug \
+    && docker-php-ext-enable imagick \
+    && docker-php-ext-enable memcached \
+    && docker-php-ext-install intl iconv pdo_mysql zip pcntl \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) gd
 
