@@ -13,7 +13,7 @@ use App\MuteLocator;
 $client = new HttpGeoClient();
 $errorHandler = new ErrorHandler('logger');
 
-$locator = new ChainLocator(
+$chain = new ChainLocator(
     new MuteLocator(
         new IpGeoLocationLocator($client, 'sdlfjlsdjf'),
         $errorHandler
@@ -23,5 +23,7 @@ $locator = new ChainLocator(
         $errorHandler
     ),
 );
+
+$locator =
 
 $location = $locator->locate(new Ip('8.8.8.8'));
