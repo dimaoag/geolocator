@@ -4,7 +4,7 @@ namespace Test;
 
 use App\HttpGeoClient;
 use App\Ip;
-use App\Locator;
+use App\IpGeoLocationLocator;
 
 class LocatorTest
 {
@@ -19,7 +19,7 @@ class LocatorTest
             'city' => 'Mountain View'
         ]));
 
-        $locator = new Locator($client, $apiKey);
+        $locator = new IpGeoLocationLocator($client, $apiKey);
         $location = $locator->locate(new Ip('8.8.8.8'));
 
         self::assertNotNull($location);
@@ -39,7 +39,7 @@ class LocatorTest
             'city' => '-'
         ]));
 
-        $locator = new Locator($client, $apiKey);
+        $locator = new IpGeoLocationLocator($client, $apiKey);
         $location = $locator->locate(new Ip('127.0.0.1'));
 
         self::assertNull($location);
