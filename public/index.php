@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 use App\ChainLocator;
+use App\ErrorHandler;
 use App\HttpGeoClient;
 use App\Ip;
 use App\IpGeoLocationLocator;
@@ -9,8 +10,11 @@ use App\IpInfoLocator;
 
 
 $client = new HttpGeoClient();
+$logger = 'logger';
+$errorHandler = new ErrorHandler($logger);
 
 $locator = new ChainLocator(
+    $errorHandler,
     new IpGeoLocationLocator($client, 'sdlfjlsdjf'),
     new IpInfoLocator($client, 'wldfnff'),
 );

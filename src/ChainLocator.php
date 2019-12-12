@@ -7,9 +7,11 @@ namespace App;
 class ChainLocator implements Locator
 {
     private $locators;
+    private $errorHandler;
 
-    public function __construct(Locator ...$locators)
+    public function __construct(ErrorHandler $errorHandler, Locator ...$locators)
     {
+        $this->errorHandler = $errorHandler;
         $this->locators = $locators;
     }
 
@@ -17,7 +19,15 @@ class ChainLocator implements Locator
     {
         $result = null;
         foreach ($this->locators as $locator){
-            $location = $locator->locate($ip);
+            $location = null;
+
+            try {
+                $location = $locator->locate($ip);
+            } catch (\Exception $exception) {
+                $this->errorHandler->handle($exception);
+            }
+
+
             if ($location === null){
                 continue;
             }
