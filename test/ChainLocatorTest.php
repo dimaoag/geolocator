@@ -3,9 +3,7 @@
 namespace Test;
 
 use App\ChainLocator;
-use App\HttpGeoClient;
 use App\Ip;
-use App\IpGeoLocationLocator;
 use App\Location;
 use App\Locator;
 

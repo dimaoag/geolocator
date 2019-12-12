@@ -7,16 +7,21 @@ use App\HttpGeoClient;
 use App\Ip;
 use App\IpGeoLocationLocator;
 use App\IpInfoLocator;
+use App\MuteLocator;
 
 
 $client = new HttpGeoClient();
-$logger = 'logger';
-$errorHandler = new ErrorHandler($logger);
+$errorHandler = new ErrorHandler('logger');
 
 $locator = new ChainLocator(
-    $errorHandler,
-    new IpGeoLocationLocator($client, 'sdlfjlsdjf'),
-    new IpInfoLocator($client, 'wldfnff'),
+    new MuteLocator(
+        new IpGeoLocationLocator($client, 'sdlfjlsdjf'),
+        $errorHandler
+    ),
+    new MuteLocator(
+        new IpInfoLocator($client, 'wldfnff'),
+        $errorHandler
+    ),
 );
 
 $location = $locator->locate(new Ip('8.8.8.8'));
