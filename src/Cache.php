@@ -6,6 +6,14 @@ namespace App;
 
 class Cache
 {
+    /*
+    Psr/SimpleCache/CacheInterface
+    class Cache implement CacheInterface
+    {
+        //some code
+    }
+
+    */
     public function get(string $id): ?string
     {
         return 'cache data';

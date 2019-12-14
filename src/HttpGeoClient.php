@@ -5,6 +5,14 @@ namespace App;
 
 class HttpGeoClient
 {
+    /*
+    Psr/HttpClient/HttpClientInterface
+    class HttpGeoClient implement HttpClientInterface
+    {
+        //code
+    }
+    */
+
     public function getResponse(string $url): ?string
     {
         $response = @file_get_contents($url);
