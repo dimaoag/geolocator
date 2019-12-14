@@ -6,6 +6,9 @@ namespace App;
 
 class Cache
 {
-    public function get(string $id){}
+    public function get(string $id): ?string
+    {
+        return 'cache data';
+    }
     public function set(string $id, $data, $time): void {}
 }

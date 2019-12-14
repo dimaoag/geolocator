@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 
+use App\Cache;
+use App\CacheLocator;
 use App\ChainLocator;
 use App\ErrorHandler;
 use App\HttpGeoClient;
@@ -12,18 +14,21 @@ use App\MuteLocator;
 
 $client = new HttpGeoClient();
 $errorHandler = new ErrorHandler('logger');
+$cache = new Cache();
 
-$chain = new ChainLocator(
-    new MuteLocator(
-        new IpGeoLocationLocator($client, 'sdlfjlsdjf'),
-        $errorHandler
+$locator = new CacheLocator(
+    new ChainLocator(
+        new MuteLocator(
+            new IpGeoLocationLocator($client, 'sdlfjlsdjf'),
+            $errorHandler
+        ),
+        new MuteLocator(
+            new IpInfoLocator($client, 'wldfnff'),
+            $errorHandler
+        )
     ),
-    new MuteLocator(
-        new IpInfoLocator($client, 'wldfnff'),
-        $errorHandler
-    ),
+    $cache,
+    3600
 );
-
-$locator =
 
 $location = $locator->locate(new Ip('8.8.8.8'));

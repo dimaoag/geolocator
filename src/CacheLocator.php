@@ -19,7 +19,14 @@ class CacheLocator implements Locator
 
     public function locate(Ip $ip): ?Location
     {
+        $key = 'location-' . $ip->getValue();
+        $location = $this->cache->get($key);
 
+        if ($location === null){
+            $location = $this->next->locate($ip);
+            $this->cache->set($key, $location, $this->time);
+        }
+        return $location;
     }
 
 }
